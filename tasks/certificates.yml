@@ -45,11 +45,10 @@
         path: '{{ orchestrator_cert_path }}/server.csr'
         privatekey_path: '{{ orchestrator_cert_path }}/server.key'
         select_crypto_backend: 'cryptography'
-        common_name: 'Server'
+        common_name: '{{ ansible_default_ipv4.address }}'
         subject_alt_name:
           - 'DNS:{{ ansible_hostname }}'
           - 'DNS:{{ ansible_fqdn }}'
-          - 'DNS:{{ ansible_default_ipv4.address }}'
           - 'IP:{{ ansible_default_ipv4.address }}'
         owner: 'root'
         mode: '0644'

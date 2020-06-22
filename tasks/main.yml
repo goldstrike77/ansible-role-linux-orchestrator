@@ -10,7 +10,7 @@
         {% endif %}\
       {% endfor %}\
       {{ _orchestrator_servers }}"
-  when: orchestrator_cluster is defined
+  when: not orchestrator_servers is defined
 
 - name: Include tasks for specific OS.
   include: '{{ ansible_os_family }}.yml'

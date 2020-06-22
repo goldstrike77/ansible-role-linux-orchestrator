@@ -13,6 +13,7 @@
   loop:
     - '{{ orchestrator_port_ui }}'
     - '{{ orchestrator_port_raft }}'
+    - '{{ orchestrator_port_agent }}'
   when:
     - services_state.ansible_facts.services["firewalld.service"] is defined
     - services_state.ansible_facts.services["firewalld.service"].state == 'running'
