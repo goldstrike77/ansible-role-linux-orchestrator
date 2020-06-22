@@ -1,0 +1,18 @@
+---
+- name: Gathering service facts.
+  service_facts:
+  register: services_state
+
+- name: Allow Orchestrator service port.
+  firewalld:
+    port: '{{ item }}/tcp'
+    zone: 'public'
+    permanent: 'true'
+    immediate: 'true'
+    state: 'enabled'
+  loop:
+    - '{{ orchestrator_port_ui }}'
+    - '{{ orchestrator_port_raft }}'
+  when:
+    - services_state.ansible_facts.services["firewalld.service"] is defined
+    - services_state.ansible_facts.services["firewalld.service"].state == 'running'

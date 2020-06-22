@@ -1,2 +1,33 @@
 ---
-# tasks file for ansible-role-linux-orchestrator
+- name: Gather Orchestrator node variables for cluster.
+  set_fact:
+    orchestrator_servers: "\
+      {% set _orchestrator_servers = [] %}\
+      {% for host in groups[group_names[-1]] %}\
+      {% set _orchestrator_cluster_name = orchestrator_cluster_name | default('', true) %}\
+        {% if ( _orchestrator_cluster_name == orchestrator_cluster_name ) %}\
+          {% if _orchestrator_servers.append(hostvars[host]['ansible_host']) %}{% endif %}\
+        {% endif %}\
+      {% endfor %}\
+      {{ _orchestrator_servers }}"
+  when: orchestrator_cluster is defined
+
+- name: Include tasks for specific OS.
+  include: '{{ ansible_os_family }}.yml'
+
+- name: Include firewall tasks.
+  include: 'firewall.yml'
+
+- name: Configuration the orchestrator.
+  include: 'configureation.yml'
+
+- name: Include certificate tasks
+  include: 'certificates.yml'
+
+- name: Enable Orchestrator service.
+  systemd:
+    name: 'orchestrator.service'
+    enabled: 'yes'
+    state: 'restarted'
+    daemon_reload: 'yes'
+  when: orchestrator_update is changed or orchestrator_conf is changed or orchestrator_systemd is changed

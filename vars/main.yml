@@ -1,2 +1,8 @@
 ---
-# vars file for ansible-role-linux-orchestrator
+orchestrator_cert_path: '/usr/local/orchestrator/ssl'
+
+orchestrator_pypi_url: 'pypi.tuna.tsinghua.edu.cn'
+
+orchestrator_python_dependent_packages:
+  - 'pip'
+  - 'cryptography'

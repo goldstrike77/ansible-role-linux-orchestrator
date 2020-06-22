@@ -1,2 +1,17 @@
 ---
-# defaults file for ansible-role-linux-orchestrator
+# General parameters #
+orchestrator_is_install: false # A boolean value, whether install the Orchestrator.
+orchestrator_cluster_name: 'cluster01' # Cluster name of servers that runs as a highly available service.
+orchestrator_path: '/data' # Specify the Orchestrator data directory.
+orchestrator_ui_user: 'admin' # Management console authentication user.
+orchestrator_ui_pass: 'changeme' # Management console authentication password.
+orchestrator_ui_ssl: true # A boolean value, whether Encrypting client communications.
+
+# Listen port #
+orchestrator_port_ui: '3002' # Orchestrator Web UI listen port.
+orchestrator_port_raft: '10008' # Orchestrator Raft listen port.
+orchestrator_port_mysqld: '3306' # MySQL instance listen port.
+
+# MySQL parameters #
+orchestrator_auth_user: 'orchestrator' # MySQL topology control account name.
+orchestrator_auth_pass: 'changeme' # MySQL topology control account password.

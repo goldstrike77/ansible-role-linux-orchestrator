@@ -1,0 +1,4 @@
+---
+orchestrator_repo_name: 'orchestrator'
+orchestrator_repo_url: 'http://cache.omygods.com/orchestrator/{{ ansible_distribution_major_version }}'
+orchestrator_packages: 'orchestrator'

@@ -1,0 +1,23 @@
+---
+- name: Include OS-specific variables.
+  include_vars: '{{ ansible_os_family }}.yml'
+
+- name: Add Orchestrator YUM repositories.
+  yum_repository:
+    name: '{{ orchestrator_repo_name }}'
+    description: '{{ orchestrator_repo_name }} YUM repository'
+    file: '{{ orchestrator_repo_name }}'
+    baseurl: '{{ orchestrator_repo_url }}'
+    gpgcheck: 'no'
+    timeout: '60'
+
+- name: Install the Orchestrator packages.
+  yum:
+    name: '{{ orchestrator_packages }}'
+    state: 'present'
+    validate_certs: 'no'
+    disable_gpg_check: 'yes'
+  register: orchestrator_update
+  until: orchestrator_update is succeeded
+  retries: 2
+  delay: 5
