@@ -5,7 +5,7 @@ orchestrator_cluster_name: 'cluster01' # Cluster name of servers that runs as a 
 orchestrator_path: '/data' # Specify the Orchestrator data directory.
 orchestrator_ui_user: 'admin' # Management console authentication user.
 orchestrator_ui_pass: 'changeme' # Management console authentication password.
-orchestrator_ui_ssl: true # A boolean value, whether Encrypting client communications.
+orchestrator_ui_ssl: false # A boolean value, whether Encrypting client communications.
 
 # Listen port #
 orchestrator_port_ui: '3002' # Orchestrator Web UI listen port.
