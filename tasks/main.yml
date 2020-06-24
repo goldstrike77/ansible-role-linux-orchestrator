@@ -29,7 +29,7 @@
         state: 'restarted'
         daemon_reload: 'yes'
       when: orchestrator_update is changed or orchestrator_conf is changed or orchestrator_systemd is changed
-  when: orchestrator_servers | length is not divisibleby 2 or orchestrator_servers | length = 1
+  when: orchestrator_servers | length is not divisibleby 2 or orchestrator_servers | length == 1
 
 - name: Orchestrator raft Members check.
   debug:
