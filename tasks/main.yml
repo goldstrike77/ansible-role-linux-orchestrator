@@ -12,22 +12,31 @@
       {{ _orchestrator_servers }}"
   when: not orchestrator_servers is defined
 
-- name: Include tasks for specific OS.
-  include: '{{ ansible_os_family }}.yml'
+- name: Orchestrator deployment operation.
+  block:
+    - name: Include tasks for specific OS.
+      include: '{{ ansible_os_family }}.yml'
+    - name: Include firewall tasks.
+      include: 'firewall.yml'
+    - name: Configuration the orchestrator.
+      include: 'configureation.yml'
+    - name: Include certificate tasks
+      include: 'certificates.yml'
+    - name: Enable Orchestrator service.
+      systemd:
+        name: 'orchestrator.service'
+        enabled: 'yes'
+        state: 'restarted'
+        daemon_reload: 'yes'
+      when: orchestrator_update is changed or orchestrator_conf is changed or orchestrator_systemd is changed
+  when: orchestrator_servers | length is not divisibleby 2 or orchestrator_servers | length = 1
 
-- name: Include firewall tasks.
-  include: 'firewall.yml'
-
-- name: Configuration the orchestrator.
-  include: 'configureation.yml'
-
-- name: Include certificate tasks
-  include: 'certificates.yml'
-
-- name: Enable Orchestrator service.
-  systemd:
-    name: 'orchestrator.service'
-    enabled: 'yes'
-    state: 'restarted'
-    daemon_reload: 'yes'
-  when: orchestrator_update is changed or orchestrator_conf is changed or orchestrator_systemd is changed
+- name: Orchestrator raft Members check.
+  debug:
+    msg: 
+      - 'The recommended configuration for a Raft members is odd, now is {% if orchestrator_servers | length is divisibleby 2 %}even{% else %}odd{% endif %}.'
+      - 'Task skipped completely.'
+  when:
+    - orchestrator_servers | length > 1
+    - orchestrator_servers | length is divisibleby 2
+  run_once: true
