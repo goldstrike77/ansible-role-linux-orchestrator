@@ -1,38 +1,112 @@
-Role Name
-=========
+![](https://img.shields.io/badge/Ansible-orchestrator-green.svg?logo=angular&style=for-the-badge)
 
-A brief description of the role goes here.
+>__Please note that the original design goal of this role was more concerned with the initial installation and bootstrapping environment, which currently does not involve performing continuous maintenance, and therefore are only suitable for testing and development purposes,  should not be used in production environments.__
 
-Requirements
-------------
+>__请注意，此角色的最初设计目标更关注初始安装和引导环境，目前不涉及执行连续维护，因此仅适用于测试和开发目的，不应在生产环境中使用。__
+___
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+<p><img src="https://raw.githubusercontent.com/goldstrike77/goldstrike77.github.io/master/img/logo/logo_orchestrator.png" align="right" /></p>
 
-Role Variables
---------------
+__Table of Contents__
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+- [Overview](#overview)
+- [Requirements](#requirements)
+  * [Operating systems](#operating-systems)
+  * [orchestrator Versions](#orchestrator-versions)
+- [ Role variables](#Role-variables)
+  * [Main Configuration](#Main-parameters)
+  * [Other Configuration](#Other-parameters)
+- [Dependencies](#dependencies)
+- [Example Playbook](#example-playbook)
+  * [Hosts inventory file](#Hosts-inventory-file)
+  * [Vars in role configuration](#vars-in-role-configuration)
+  * [Combination of group vars and playbook](#combination-of-group-vars-and-playbook)
+- [License](#license)
+- [Author Information](#author-information)
+- [Contributors](#Contributors)
 
-Dependencies
-------------
+## Overview
+Orchestrator is a MySQL high availability and replication management tool, runs as a service and provides command-line access, HTTP API and Web interface. 
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+## Requirements
+### Operating systems
+This Ansible role installs orchestrator on Linux operating system, including establishing a filesystem structure and server configuration with some common operational features. Will works on the following operating systems:
 
-Example Playbook
-----------------
+  * CentOS 7
 
+### orchestrator versions
+
+The following list of supported the orchestrator releases:
+
+* Orchestrator 3+
+
+## Role variables
+### Main parameters #
+There are some variables in defaults/main.yml which can (Or needs to) be overridden:
+
+##### General parameters
+* `orchestrator_is_install`: A boolean value, whether install the Orchestrator.
+* `orchestrator_cluster_name`: Cluster name of servers that runs as a highly available service.
+* `orchestrator_path`: Specify the Orchestrator data directory.
+* `orchestrator_ui_user`: Management console authentication user.
+* `orchestrator_ui_pass`: Management console authentication password.
+* `orchestrator_ui_ssl`: A boolean value, whether Encrypting client communications.
+
+##### Listen port
+* `orchestrator_port_ui`: Orchestrator Web UI listen port.
+* `orchestrator_port_agent`: Orchestrator Agent listen port.
+* `orchestrator_port_raft`: Orchestrator Raft listen port.
+
+##### MySQL parameters
+* `orchestrator_mysql_user`: MySQL topology control account name.
+* `orchestrator_mysql_pass`: MySQL topology control account password.
+* `orchestrator_mysql_port`: MySQL topology control instance listen port.
+
+
+### Other parameters
+There are some variables in vars/main.yml:
+
+## Dependencies
+- Ansible versions >= 2.8
+- Python >= 2.7.5
+
+## Example
+
+### Hosts inventory file
+See tests/inventory for an example.
+
+### Vars in role configuration
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```yaml
+- hosts: all
+  roles:
+     - role: ansible-role-linux-orchestrator
+```
 
-License
--------
+### Combination of group vars and playbook
+You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`.
 
-BSD
+```yaml
+orchestrator_is_install: false
+orchestrator_cluster_name: 'cluster01'
+orchestrator_path: '/data'
+orchestrator_ui_user: 'admin'
+orchestrator_ui_pass: 'changeme'
+orchestrator_ui_ssl: false
+orchestrator_port_ui: '3002'
+orchestrator_port_agent: '3003'
+orchestrator_port_raft: '10008'
+orchestrator_mysql_user: 'orchestrator'
+orchestrator_mysql_pass: 'changeme'
+orchestrator_mysql_port: '3306'
+```
 
-Author Information
-------------------
+## License
+![](https://img.shields.io/badge/MIT-purple.svg?style=for-the-badge)
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+## Author Information
+Please send your suggestions to make this role better.
+
+## Contributors
+Special thanks to the [Connext Information Technology](http://www.connext.com.cn) for their contributions to this role.
