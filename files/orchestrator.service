@@ -9,8 +9,10 @@ WorkingDirectory=/usr/local/orchestrator
 ExecStart=/usr/local/orchestrator/orchestrator http
 EnvironmentFile=-/etc/sysconfig/orchestrator
 ExecReload=/bin/kill -HUP $MAINPID
+LimitNOFILE=8192
+LimitNPROC=8192
 Restart=on-failure
-RestartSec=30s
+RestartSec=20s
 
 [Install]
 WantedBy=default.target
