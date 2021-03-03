@@ -3,7 +3,7 @@
   pip:
     name: '{{ orchestrator_python_dependent_packages }}'
     state: 'forcereinstall'
-    extra_args: '--default-timeout=120 --ignore-installed -i https://{{ orchestrator_pypi_url }}/simple --trusted-host {{ orchestrator_pypi_url }}'
+    extra_args: '--default-timeout=120 -i https://{{ orchestrator_pypi_url }}/simple --trusted-host {{ orchestrator_pypi_url }}'
   register: orchestrator_python_status
   until: orchestrator_python_status is succeeded
   retries: 5
