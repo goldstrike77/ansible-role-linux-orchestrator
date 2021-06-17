@@ -24,6 +24,7 @@ __Table of Contents__
 - [License](#license)
 - [Author Information](#author-information)
 - [Contributors](#Contributors)
+- [Donations](#Donations)
 
 ## Overview
 Orchestrator is a MySQL high availability and replication management tool, runs as a service and provides command-line access, HTTP API and Web interface. 
@@ -45,12 +46,11 @@ The following list of supported the orchestrator releases:
 There are some variables in defaults/main.yml which can (Or needs to) be overridden:
 
 ##### General parameters
-* `orchestrator_is_install`: A boolean value, whether install the Orchestrator.
 * `orchestrator_cluster_name`: Cluster name of servers that runs as a highly available service.
 * `orchestrator_path`: Specify the Orchestrator data directory.
 * `orchestrator_ui_user`: Management console authentication user.
 * `orchestrator_ui_pass`: Management console authentication password.
-* `orchestrator_ui_ssl`: A boolean value, whether Encrypting client communications.
+* `orchestrator_ui_ssl`: A boolean to determine whether or not Encrypting client communications.
 
 ##### Listen port
 * `orchestrator_port_ui`: Orchestrator Web UI listen port.
@@ -88,7 +88,6 @@ Including an example of how to use your role (for instance, with variables passe
 You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`.
 
 ```yaml
-orchestrator_is_install: false
 orchestrator_cluster_name: 'cluster01'
 orchestrator_path: '/data'
 orchestrator_ui_user: 'admin'
@@ -110,3 +109,8 @@ Please send your suggestions to make this role better.
 
 ## Contributors
 Special thanks to the [Connext Information Technology](http://www.connext.com.cn) for their contributions to this role.
+
+## Donations
+Please donate to the following monero address.
+
+    46CHVMbb6wQV2PJYEbahb353SYGqXhcdFQVEWdCnHb6JaR5125h3kNQ6bcqLye5G7UF7qz6xL9qHLDSAY3baagfmLZABz75
