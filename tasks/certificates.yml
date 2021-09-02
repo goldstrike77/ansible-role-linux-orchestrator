@@ -1,9 +1,10 @@
 ---
 - name: Install requirement python package.
   pip:
-    name: '{{ orchestrator_python_dependent_packages }}'
-    state: 'forcereinstall'
+    name: '{{ item }}'
+    state: 'present'
     extra_args: '--default-timeout=120 -i https://{{ orchestrator_pypi_url }}/simple --trusted-host {{ orchestrator_pypi_url }}'
+  loop: '{{ orchestrator_python_dependent_packages }}'
   register: orchestrator_python_status
   until: orchestrator_python_status is succeeded
   retries: 5

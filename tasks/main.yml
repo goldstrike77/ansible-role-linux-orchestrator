@@ -3,7 +3,7 @@
   set_fact:
     orchestrator_servers: "\
       {% set _orchestrator_servers = [] %}\
-      {% for host in groups[group_names[-1]] %}\
+      {% for host in groups[group_names[0]] %}\
       {% set _orchestrator_cluster_name = orchestrator_cluster_name | default('', true) %}\
         {% if ( _orchestrator_cluster_name == orchestrator_cluster_name ) %}\
           {% if _orchestrator_servers.append(hostvars[host]['ansible_host']) %}{% endif %}\
