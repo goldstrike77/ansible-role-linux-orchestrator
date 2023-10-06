@@ -1,26 +1,26 @@
 ---
-- name: Creating Orchestrator folder.
+- name: Creating Orchestrator data folder.
   file:
-    dest: '{{ orchestrator_path }}/orchestrator'
-    state: 'directory'
-    owner: 'root'
-    group: 'root'
-    mode: '0750'
+    dest: "{{ orchestrator_path }}/orchestrator"
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: "0750"
 
 - name: Orchestrator configure file transfer.
   template:
-    src: 'orchestrator.conf.json.j2'
-    dest: '/usr/local/orchestrator/orchestrator.conf.json'
-    owner: 'root'
-    group: 'root'
-    mode: '640'
-  register: orchestrator_conf
+    src: "orchestrator.conf.json.j2"
+    dest: "/usr/local/orchestrator/orchestrator.conf.json"
+    owner: "root"
+    group: "root"
+    mode: "640"
+  notify: Restart the Orchestrator service.
 
 - name: Orchestrator systemd file transfer.
   copy:
-    src: 'orchestrator.service'
-    dest: '/etc/systemd/system/orchestrator.service'
-    owner: 'root'
-    group: 'root'
-    mode: '644'
-  register: orchestrator_systemd
+    src: "orchestrator.service"
+    dest: "/etc/systemd/system/orchestrator.service"
+    owner: "root"
+    group: "root"
+    mode: "644"
+  notify: Restart the Orchestrator service.

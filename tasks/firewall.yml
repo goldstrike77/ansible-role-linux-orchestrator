@@ -5,15 +5,15 @@
 
 - name: Allow Orchestrator service port.
   firewalld:
-    port: '{{ item }}/tcp'
-    zone: 'public'
-    permanent: 'true'
-    immediate: 'true'
-    state: 'enabled'
+    port: "{{ item }}/tcp"
+    zone: "public"
+    permanent: "true"
+    immediate: "true"
+    state: "enabled"
   loop:
-    - '{{ orchestrator_port_ui }}'
-    - '{{ orchestrator_port_raft }}'
-    - '{{ orchestrator_port_agent }}'
+    - "{{ orchestrator_ui | default('3002') }}"
+    - "{{ orchestrator_port_agent | default('3003') }}"
+    - "{{ orchestrator_port_raft | default('10008') }}"
   when:
     - services_state.ansible_facts.services["firewalld.service"] is defined
     - services_state.ansible_facts.services["firewalld.service"].state == 'running'

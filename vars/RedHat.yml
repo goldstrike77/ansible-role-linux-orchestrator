@@ -1,4 +1,21 @@
 ---
-orchestrator_repo_name: 'orchestrator'
-orchestrator_repo_url: 'http://cache.omygods.com/orchestrator/{{ ansible_distribution_major_version }}'
-orchestrator_packages: 'orchestrator'
+orchestrator_dependent_packages:
+  - "python-pip"
+  - "libselinux-utils"
+  - "policycoreutils-python"
+
+orchestrator_python_dependent_packages_RedHat_7:
+  - "pip==20.3.4"
+  - "cffi==1.14.6"
+  - "idna==2.10"
+  - "cryptography==2.4.2"
+  - "paramiko==2.4.3"
+  - "pyopenssl==19.0.0"
+
+orchestrator_python_dependent_packages_RedHat_8:
+  - "pip"
+  - "cffi"
+  - "idna"
+  - "cryptography"
+  - "paramiko"
+  - "pyopenssl"

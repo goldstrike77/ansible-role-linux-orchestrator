@@ -5,9 +5,9 @@
       {% set _orchestrator_servers = [] %}\
       {% for host in groups[group_names[0]] %}\
       {% set _orchestrator_cluster_name = orchestrator_cluster_name | default('', true) %}\
-        {% if ( _orchestrator_cluster_name == orchestrator_cluster_name ) %}\
-          {% if _orchestrator_servers.append(hostvars[host]['ansible_host']) %}{% endif %}\
-        {% endif %}\
+      {% if ( _orchestrator_cluster_name == orchestrator_cluster_name ) %}\
+      {% if _orchestrator_servers.append(hostvars[host]['ansible_host']) %}{% endif %}\
+      {% endif %}\
       {% endfor %}\
       {{ _orchestrator_servers }}"
   when: not orchestrator_servers is defined
@@ -15,27 +15,26 @@
 - name: Orchestrator deployment operation.
   block:
     - name: Include tasks for specific OS.
-      include: '{{ ansible_os_family }}.yml'
+      include: "{{ ansible_distribution_file_variety }}.yml"
+    - name: Straight to getenforce selinux status.
+      include: "selinux.yml"
     - name: Include firewall tasks.
-      include: 'firewall.yml'
+      include: "firewall.yml"
+    - name: Include tasks for specific OS.
+      include: "installation.yml"
     - name: Configuration the orchestrator.
-      include: 'configureation.yml'
+      include: "configureation.yml"
     - name: Include certificate tasks
-      include: 'certificates.yml'
-    - name: Enable Orchestrator service.
-      systemd:
-        name: 'orchestrator.service'
-        enabled: 'yes'
-        state: 'restarted'
-        daemon_reload: 'yes'
-      when: orchestrator_update is changed or orchestrator_conf is changed or orchestrator_systemd is changed
+      include: "certificates.yml"
+    - name: Flush handlers.
+      meta: flush_handlers
   when: orchestrator_servers | length is not divisibleby 2 or orchestrator_servers | length == 1
 
 - name: Orchestrator raft Members check.
   debug:
-    msg: 
-      - 'The recommended configuration for a Raft members is odd, now is {% if orchestrator_servers | length is divisibleby 2 %}even{% else %}odd{% endif %}.'
-      - 'Task skipped completely.'
+    msg:
+      - "The recommended configuration for a Raft members is odd, now is {% if orchestrator_servers | length is divisibleby 2 %}even{% else %}odd{% endif %}."
+      - "Task skipped completely."
   when:
     - orchestrator_servers | length > 1
     - orchestrator_servers | length is divisibleby 2

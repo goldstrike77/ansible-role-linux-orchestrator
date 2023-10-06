@@ -1,12 +1,4 @@
 ---
-orchestrator_cert_path: '/usr/local/orchestrator/ssl'
+orchestrator_cert_path: "/usr/local/orchestrator/ssl"
 
-orchestrator_pypi_url: 'pypi.tuna.tsinghua.edu.cn'
-
-orchestrator_python_dependent_packages:
-  - 'pip==20.3.4'
-  - 'cffi==1.14.6'
-  - 'idna==2.10'
-  - 'cryptography==2.4.2'
-  - 'paramiko==2.4.3'
-  - 'pyopenssl==19.0.0'
+orchestrator_pypi_url: "pypi.tuna.tsinghua.edu.cn"

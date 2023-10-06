@@ -1,0 +1,9 @@
+---
+- name: Orchestrator program binary transfer.
+  unarchive:
+    src: "orchestrator.tar.xz"
+    dest: "/usr/local"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  notify: Restart the Orchestrator service.
